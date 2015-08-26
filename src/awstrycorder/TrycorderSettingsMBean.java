@@ -6,6 +6,7 @@
 package awstrycorder;
 
 import com.amazonaws.auth.AWSCredentials;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public interface TrycorderSettingsMBean {
     public void AddCredential(String ProfileName, String Key, String PrivateKey);
     public void RemoveCredential(String ProfileName);
     public AWSCredentials GetCredential(String profilename);
+   public ArrayList GetProfiles();
    
     
     //UI Setup (To allow saving and loading from config file.
@@ -49,7 +51,7 @@ public interface TrycorderSettingsMBean {
     
     //ServiceSettings
         public boolean getShowUI();
-        public boolean setShowUI(boolean showit);
+        public void setShowUI(boolean showit);
         public int getrerun();
         
         public void setrerun(int minutes_to_next_run);

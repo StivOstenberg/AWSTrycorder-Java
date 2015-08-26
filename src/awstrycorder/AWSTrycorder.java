@@ -5,6 +5,12 @@
  */
 package awstrycorder;
 import com.amazonaws.auth.AWSCredentials;
+import java.lang.management.ManagementFactory;
+import javax.management.*;
+import javax.management.ObjectInstance;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+import javax.management.remote.JMXConnector;
 import javax.swing.JFrame;
 
 /**
@@ -13,10 +19,15 @@ import javax.swing.JFrame;
  */
 public class AWSTrycorder {
 
+    	private static final String CONNECTOR_ADDRESS_PROPERTY = "com.sun.management.jmxremote.localConnectorAddress";
+        
+        static JMXConnector myJMXconnector = null;
+    
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MalformedObjectNameException, InstanceAlreadyExistsException, NotCompliantMBeanException, MBeanRegistrationException {
        //Process Args
               //Config File Location
         
@@ -26,7 +37,15 @@ public class AWSTrycorder {
               // GUI or CLI
         //Load ConfigFile
         
-        //Launch GUI if necessary
+                //Get the MBean server
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        //Register der MBean
+        TrycorderSettings mBean = new TrycorderSettings();
+        ObjectName name = new ObjectName("com.stiv.jmx:type=TrycorderSettings");
+        mbs.registerMBean(mBean, name);
+        
+
+//Launch GUI if necessary
         AWSTrycorderGUI frame = new AWSTrycorderGUI();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();

@@ -35,9 +35,12 @@ public class AWSTrycorder {
         
         
               // GUI or CLI
+        
         //Load ConfigFile
         
-                //Get the MBean server
+        //Get the MBean server
+        
+        
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         //Register der MBean
         TrycorderSettings mBean = new TrycorderSettings();

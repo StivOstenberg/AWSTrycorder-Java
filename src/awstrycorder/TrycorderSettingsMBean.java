@@ -30,8 +30,7 @@ public interface TrycorderSettingsMBean {
     public void RemoveCredential(String ProfileName);
     public HashMap<String,String> GetCredential(String profilename);
    public ArrayList GetProfiles();
-   
-    
+       
     //UI Setup (To allow saving and loading from config file.
     
         //Selected Profiles (List accounts to show/scan)

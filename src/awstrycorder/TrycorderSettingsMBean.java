@@ -25,10 +25,10 @@ public interface TrycorderSettingsMBean {
     public String getAWSCredentialsFile();
     
     //Profilename to lookup Key and Secret.
-    public Map<String,AWSCredentials> Credlist = new HashMap<>();
+    public HashMap<String,HashMap<String,String>> Credlist = new HashMap<>();
     public void AddCredential(String ProfileName, String Key, String PrivateKey);
     public void RemoveCredential(String ProfileName);
-    public AWSCredentials GetCredential(String profilename);
+    public HashMap<String,String> GetCredential(String profilename);
    public ArrayList GetProfiles();
    
     

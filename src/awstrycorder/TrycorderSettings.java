@@ -5,8 +5,6 @@
  */
 package awstrycorder;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,7 +17,7 @@ public class TrycorderSettings implements TrycorderSettingsMBean{
     private String TrycorderConfigFile="";
     private String AWSCredentialsFile="";
     private boolean ShowUI = true;
-    private HashMap<String,BasicAWSCredentials> Credentials = new HashMap<>();
+    private HashMap<String,HashMap<String,String>> Credentials = new HashMap<>();
             
     @Override
     public void setTrycorderConfigFile(String configfile) {
@@ -43,8 +41,9 @@ public class TrycorderSettings implements TrycorderSettingsMBean{
 
     @Override
     public void AddCredential(String ProfileName, String Key, String PrivateKey) {
-        BasicAWSCredentials awsCred = new BasicAWSCredentials(Key, PrivateKey);
-        Credentials.put(ProfileName, awsCred);
+        HashMap<String,String> Credential = new HashMap<>();
+        Credential.put(Key, PrivateKey);
+        Credentials.put(ProfileName, Credential);
     }
 
     @Override
@@ -60,11 +59,11 @@ public class TrycorderSettings implements TrycorderSettingsMBean{
     }
 
     @Override
-    public AWSCredentials GetCredential(String profilename) {
+    public HashMap<String,String> GetCredential(String profilename) {
         try
         {
          String rabbit = "";   
-        AWSCredentials arf =  Credentials.get(profilename);
+        HashMap<String,String> arf =  Credentials.get(profilename);
         
         return arf;
         }

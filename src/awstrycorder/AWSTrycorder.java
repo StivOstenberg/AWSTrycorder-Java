@@ -53,6 +53,7 @@ public class AWSTrycorder {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
+            frame.setTitle("AWS Trycorder - Java");
         
     }
     

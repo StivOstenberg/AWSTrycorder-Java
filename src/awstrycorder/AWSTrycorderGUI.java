@@ -28,20 +28,37 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        UserPane = new javax.swing.JScrollPane();
-        IAMUsersTable = new javax.swing.JTable();
-        S3Pane = new javax.swing.JScrollPane();
-        S3BucketTable = new javax.swing.JTable();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        TabbedPane = new javax.swing.JTabbedPane();
+        AccountsPane = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         EC2Pane = new javax.swing.JScrollPane();
         EC2Table = new javax.swing.JTable();
+        S3Pane = new javax.swing.JScrollPane();
+        S3BucketTable = new javax.swing.JTable();
+        UserPane = new javax.swing.JScrollPane();
+        IAMUsersTable = new javax.swing.JTable();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        SearchString = new javax.swing.JTextField();
+        ComparatorCombo = new javax.swing.JComboBox<>();
+        ColumntoSearchCombo = new javax.swing.JComboBox<>();
+        ScanProgressbar = new javax.swing.JProgressBar();
+        ScanStatusLabel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
+        openCredFileMenuItem = new javax.swing.JMenuItem();
+        ScanMenuItem = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
+        scanMenu = new javax.swing.JMenu();
+        ScanDoScan = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        doEC2Scan = new javax.swing.JCheckBoxMenuItem();
+        DoS3Scan = new javax.swing.JCheckBoxMenuItem();
+        DoIAMScan = new javax.swing.JCheckBoxMenuItem();
+        columnMenu = new javax.swing.JMenu();
+        showallcolMenutem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -51,9 +68,13 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
+        jMenuItem1.setText("jMenuItem1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        IAMUsersTable.setModel(new javax.swing.table.DefaultTableModel(
+        AccountsPane.setViewportBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,24 +85,9 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        UserPane.setViewportView(IAMUsersTable);
+        AccountsPane.setViewportView(jTable1);
 
-        jTabbedPane1.addTab("IAM Users", UserPane);
-
-        S3BucketTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        S3Pane.setViewportView(S3BucketTable);
-
-        jTabbedPane1.addTab("S3 Buckets", S3Pane);
+        TabbedPane.addTab("Accounts", null, AccountsPane, "");
 
         EC2Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,14 +102,65 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         ));
         EC2Pane.setViewportView(EC2Table);
 
-        jTabbedPane1.addTab("EC2 Instances", EC2Pane);
+        TabbedPane.addTab("EC2 Instances", EC2Pane);
+
+        S3BucketTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        S3Pane.setViewportView(S3BucketTable);
+
+        TabbedPane.addTab("S3 Buckets", S3Pane);
+
+        IAMUsersTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        UserPane.setViewportView(IAMUsersTable);
+
+        TabbedPane.addTab("IAM Users", UserPane);
+
+        ComparatorCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contains", "=", "Lacks" }));
+
+        ColumntoSearchCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-AnyField-" }));
+
+        ScanStatusLabel.setText("No Scan Data");
+        ScanStatusLabel.setToolTipText("");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
+        openCredFileMenuItem.setMnemonic('o');
+        openCredFileMenuItem.setText("Open Credential File");
+        openCredFileMenuItem.setToolTipText("");
+        openCredFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openCredFileMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(openCredFileMenuItem);
+
+        ScanMenuItem.setText("Scan");
+        ScanMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ScanMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(ScanMenuItem);
 
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
@@ -124,6 +181,33 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
+
+        scanMenu.setText("Scan");
+        scanMenu.setToolTipText("");
+
+        ScanDoScan.setText("Scan");
+        scanMenu.add(ScanDoScan);
+        scanMenu.add(jSeparator1);
+
+        doEC2Scan.setSelected(true);
+        doEC2Scan.setText("EC2");
+        scanMenu.add(doEC2Scan);
+
+        DoS3Scan.setSelected(true);
+        DoS3Scan.setText("S3");
+        scanMenu.add(DoS3Scan);
+
+        DoIAMScan.setText("IAMUsers");
+        scanMenu.add(DoIAMScan);
+
+        menuBar.add(scanMenu);
+
+        columnMenu.setText("Columns");
+
+        showallcolMenutem.setText("Show All");
+        columnMenu.add(showallcolMenutem);
+
+        menuBar.add(columnMenu);
 
         editMenu.setMnemonic('e');
         editMenu.setText("Edit");
@@ -165,19 +249,44 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1076, Short.MAX_VALUE)
+            .addComponent(TabbedPane)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(508, 508, 508))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ScanProgressbar, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                    .addComponent(ScanStatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ColumntoSearchCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ComparatorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(SearchString, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(508, 508, 508))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addComponent(TabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SearchString, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComparatorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ColumntoSearchCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ScanStatusLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ScanProgressbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -186,6 +295,14 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void ScanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ScanMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ScanMenuItemActionPerformed
+
+    private void openCredFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCredFileMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openCredFileMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,32 +337,60 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
                 new AWSTrycorderGUI().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane AccountsPane;
+    private javax.swing.JComboBox<String> ColumntoSearchCombo;
+    private javax.swing.JComboBox<String> ComparatorCombo;
+    private javax.swing.JCheckBoxMenuItem DoIAMScan;
+    private javax.swing.JCheckBoxMenuItem DoS3Scan;
     private javax.swing.JScrollPane EC2Pane;
     private javax.swing.JTable EC2Table;
     private javax.swing.JTable IAMUsersTable;
     private javax.swing.JTable S3BucketTable;
     private javax.swing.JScrollPane S3Pane;
+    private javax.swing.JMenuItem ScanDoScan;
+    private javax.swing.JMenuItem ScanMenuItem;
+    private javax.swing.JProgressBar ScanProgressbar;
+    private javax.swing.JLabel ScanStatusLabel;
+    private javax.swing.JTextField SearchString;
+    private javax.swing.JTabbedPane TabbedPane;
     private javax.swing.JScrollPane UserPane;
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JMenu columnMenu;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JCheckBoxMenuItem doEC2Scan;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JMenuItem openCredFileMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenu scanMenu;
+    private javax.swing.JMenuItem showallcolMenutem;
     // End of variables declaration//GEN-END:variables
 
+    
+    //Stiv Functions
+    private boolean LoadCredFile()
+    {
+        boolean success=false;
+        
+        
+        
+        return success;
+    }
 }

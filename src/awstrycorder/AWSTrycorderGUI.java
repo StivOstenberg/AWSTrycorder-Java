@@ -40,8 +40,8 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         IAMUsersTable = new javax.swing.JTable();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         SearchString = new javax.swing.JTextField();
-        ComparatorCombo = new javax.swing.JComboBox<>();
-        ColumntoSearchCombo = new javax.swing.JComboBox<>();
+        ComparatorCombo = new javax.swing.JComboBox<String>();
+        ColumntoSearchCombo = new javax.swing.JComboBox<String>();
         ScanProgressbar = new javax.swing.JProgressBar();
         ScanStatusLabel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -134,9 +134,9 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
 
         TabbedPane.addTab("IAM Users", UserPane);
 
-        ComparatorCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contains", "=", "Lacks" }));
+        ComparatorCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contains", "=", "Lacks" }));
 
-        ColumntoSearchCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-AnyField-" }));
+        ColumntoSearchCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-AnyField-" }));
 
         ScanStatusLabel.setText("No Scan Data");
         ScanStatusLabel.setToolTipText("");
@@ -186,17 +186,20 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         scanMenu.setToolTipText("");
 
         ScanDoScan.setText("Scan");
+        ScanDoScan.setToolTipText("Scan selected AWS Components");
         scanMenu.add(ScanDoScan);
         scanMenu.add(jSeparator1);
 
         doEC2Scan.setSelected(true);
         doEC2Scan.setText("EC2");
+        doEC2Scan.setNextFocusableComponent(ScanMenuItem);
         scanMenu.add(doEC2Scan);
 
         DoS3Scan.setSelected(true);
         DoS3Scan.setText("S3");
         scanMenu.add(DoS3Scan);
 
+        DoIAMScan.setSelected(true);
         DoIAMScan.setText("IAMUsers");
         scanMenu.add(DoIAMScan);
 
@@ -336,6 +339,9 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
             public void run() {
                 new AWSTrycorderGUI().setVisible(true);
             }
+            
+            //Need to get a handle on the mBean which will execute code.
+            
         });
         
     }
@@ -393,4 +399,6 @@ public class AWSTrycorderGUI extends javax.swing.JFrame {
         
         return success;
     }
+    
+    
 }

@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author s.ostenberg
  */
-public interface TrycorderSettingsMBean {
+public interface TrycorderEngineMBean {
     
     //Preppie stuff
     public void setTrycorderConfigFile(String configfile);

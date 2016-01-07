@@ -43,8 +43,8 @@ public class AWSTrycorder {
         
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         //Register der MBean
-        TrycorderSettings mBean = new TrycorderSettings();
-        ObjectName name = new ObjectName("com.stiv.jmx:type=TrycorderSettings");
+        TrycorderEngine mBean = new TrycorderEngine();
+        ObjectName name = new ObjectName("com.stiv.jmx:type=TrycorderEngine");
         mbs.registerMBean(mBean, name);
         
 

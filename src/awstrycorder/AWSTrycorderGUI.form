@@ -68,6 +68,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="ScanDoScan">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Scan"/>
+                <Property name="toolTipText" type="java.lang.String" value="Scan selected AWS Components"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
@@ -76,6 +77,9 @@
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="EC2"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="ScanMenuItem"/>
+                </Property>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="DoS3Scan">
@@ -86,6 +90,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="DoIAMScan">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="IAMUsers"/>
               </Properties>
             </MenuItem>

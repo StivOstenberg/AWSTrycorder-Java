@@ -17,7 +17,7 @@ import java.util.HashMap;
  *
  * @author s.ostenberg
  */
-public class TrycorderEngine implements TrycorderSettingsMBean{
+public class TrycorderEngine implements TrycorderEngineMBean{
     private String TrycorderConfigFile="";
     private String AWSCredentialsFile="";
     private boolean ShowUI = true;

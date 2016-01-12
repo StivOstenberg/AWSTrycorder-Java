@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 package awstrycorder;
-
-
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.joda.time.DateTime;
+
 
 
 
@@ -21,6 +19,12 @@ public class TrycorderEngine implements TrycorderEngineMBean{
     private String TrycorderConfigFile="";
     private String AWSCredentialsFile="";
     private boolean ShowUI = true;
+    private boolean ScanEC2=true;
+    private boolean ScanS3=true;
+    private boolean ScanIAM=true;
+    private int reruninterval = 0; //If setting to autoscan at intervals of minutes.  0 means dont rescan.
+    private boolean continuescanning = true; //Can be set to false to interrupt scan.
+
     private HashMap<String,HashMap<String,String>> Credentials = new HashMap<>();
             
     @Override
@@ -88,12 +92,12 @@ public class TrycorderEngine implements TrycorderEngineMBean{
 
     @Override
     public int getrerun() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return reruninterval;
     }
 
     @Override
     public void setrerun(int minutes_to_next_run) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        reruninterval=minutes_to_next_run;
     }
 
     @Override
@@ -101,5 +105,45 @@ public class TrycorderEngine implements TrycorderEngineMBean{
         ArrayList<String> dalist = new ArrayList<String>(Credentials.keySet());
         return dalist;
     }
+
+    @Override
+    public void setScan(String AWSComponent, boolean scan) {
+        //Where we set our scan scope options.
+        //Current Values are EC2,S3,IAM
+        if(AWSComponent.equals("EC2")) ScanEC2=scan;
+        if(AWSComponent.equals("S3")) ScanS3=scan;
+        if(AWSComponent.equals("IAM")) ScanIAM=scan;
+    }
+
+    @Override
+    public boolean StartScan() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DateTime getTimeScanStarted() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isScanRunning() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DateTime getTimeScanEnded() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void TerminateScan() {
+        continuescanning=false;
+    }
+
     
+    public void DoScan()
+    {
+        
+        
+    }
 }
